@@ -7,12 +7,14 @@ import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Spider;
 import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -87,7 +89,21 @@ public void onDamageEvent(EntityDamageByEntityEvent event) {
 	if(event.getDamager() instanceof Enderman) {
   event.setDamage(1000);
 }
+	if(event.getDamager() instanceof Zombie) {
+		  event.setDamage(19);
+		 
+		}
     
+	if(event.getDamager() instanceof Spider) {
+		  event.setDamage(19);
+		 
+		}
+
     
-    }}
+}
+@EventHandler
+public void onDamage(PlayerItemDamageEvent event) {
+  	  event.setDamage(event.getDamage() * 4);
+}
+}
     
