@@ -1,5 +1,5 @@
-package me.binru.impossible;
-//imports
+package me.Binru.impossible;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -13,36 +13,35 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.logging.Logger;
+
 
 public class Main extends JavaPlugin implements Listener {
+
     private static double MAX_HEALTH = 10.0;
+    Logger log = Bukkit.getLogger();
 
     public void onEnable() {
-        //ONENABLE
         Bukkit.getPluginManager().registerEvents(this, this);
-        Bukkit.broadcastMessage("Impossible plugin is running and working! :3");
-
-
-
-
+        log.info("Impossible plugin is running and working! :3");
     }
 
 
     public void onDisable() {
-        //ondisable
 
     }
 
 
     @EventHandler
-    //spawnEvent
     public void creatureSpawn(CreatureSpawnEvent event) {
-        //creeper
+
+        // this lines create the powered creeper that replaces the normal creeper
         if (event.getEntityType() == EntityType.CREEPER) {
             Creeper creeper = (Creeper) event.getEntity();
             creeper.setPowered(true);
         }
-        //zombie
+
+        // this lines create the diamond armor and sharpness 5 sword for zombies that replaces the normal zombie
         if (event.getEntityType() == EntityType.ZOMBIE) {
             Zombie zombie = (Zombie) event.getEntity();
             zombie.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
@@ -54,7 +53,8 @@ public class Main extends JavaPlugin implements Listener {
             opSword.addEnchantment(Enchantment.DAMAGE_ALL, 5);
             zombie.getEquipment().setItemInMainHand(opSword);
         }
-        //skeleton
+
+        // this lines create the diamond armor and op bow for skeletons that replaces the normal skeletons
         if (event.getEntityType() == EntityType.SKELETON) {
             Skeleton skeleton = (Skeleton) event.getEntity();
             skeleton.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
@@ -70,7 +70,7 @@ public class Main extends JavaPlugin implements Listener {
             skeleton.getEquipment().setItemInMainHand(punchBow);
 
         }
-            //wither skeleton
+        // this lines create the netherite armor and sharpness 5 sword for wither skeletons that replaces the normal wither skeleton
         if (event.getEntityType() == EntityType.WITHER_SKELETON) {
             WitherSkeleton ws = (WitherSkeleton) event.getEntity();
             ws.getEquipment().setBoots(new ItemStack(Material.NETHERITE_BOOTS));
@@ -87,33 +87,35 @@ public class Main extends JavaPlugin implements Listener {
     }
     @EventHandler
     public void onDamageEvent(EntityDamageByEntityEvent event) {
-        //enderman
+
+        // this lines make the enderman instant kill anything that is angry at
         if(event.getDamager() instanceof Enderman) {
             event.setDamage(1000);
         }
-        //zombie dmg
+
+        // this lines make the zombie deal almost all damage of a player
         if(event.getDamager() instanceof Zombie) {
             event.setDamage(19);
-
         }
-        //spider
+
+        // this lines make the spider deal almost all damage of a player
         if(event.getDamager() instanceof Spider) {
             event.setDamage(19);
-
         }
+        // this lines make the enderdragon instant kill a player
         if(event.getDamager() instanceof EnderDragon) {
             event.setDamage(30);
-
         }
 
     }
     @EventHandler
-    //durability
+    // this lines make the items broke 4 times faster
     public void onDamage(PlayerItemDamageEvent event) {
         event.setDamage(event.getDamage() * 4);
     }
 
     @EventHandler
+    // this lines make the player only have 5 full hearts instead of 10 full hearts
     public void onPlayerJoin(PlayerJoinEvent event) {
         event.getPlayer().setMaxHealth(MAX_HEALTH);
         event.getPlayer().setHealth(MAX_HEALTH);
